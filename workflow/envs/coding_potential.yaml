@@ -1,0 +1,8 @@
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - cpat =3.0.4
+  - bedops =2.4.41
+  - perl-data-dumper =2.183
+  - perl-getopt-long =2.52

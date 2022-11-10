@@ -1,0 +1,65 @@
+wrapper_version: v1.4.0
+#wrapper_version: v1.10.0
+#wrapper_version: v1.18.0 # 28/10/2022
+#wrapper_version: v1.19.0 # 08/11/2022
+
+samples: ../resources/phenodata.tsv
+
+trimming:
+  activate: False
+
+params:
+  general:
+    threads: 7
+  mapper: bowtie2
+
+ref:
+  ### Homo sapiens genome ###
+  # species: homo_sapiens
+  # release: 100
+  # build: GRCh38
+  # sp: hsapiens
+  ### Homo sapiens genome ###
+  
+  ### Mus musculus genome ###
+  # species: mus_musculus
+  # release: 107
+  # build: GRCm39
+  # sp: mmusculus
+  ### Mus musculus genome ###
+
+  ### Macaca mulatta genome ###
+  species: macaca_mulatta
+  release: 106
+  build: Mmul_10
+  sp: mmulatta
+  ### Macaca mulatta genome ###
+
+##### Testing...
+pca:
+  activate: True
+  labels:
+    - Class
+
+diffexp:
+  contrasts: ZIKV-vs-baseline
+  model: ~Class
+
+genesets:
+  reactome: resources/gmts/ReactomePathwaysLevel3.gmt
+
+
+
+
+#### Check out ####
+####################  deseq2  ####################
+#deseq2:
+#  contrasts:
+#    time0-vs-time6:
+#    - time0
+#    - time6
+#  gene_trans_map: true
+#  pca:
+#    labels:
+#    - condition
+##################################################

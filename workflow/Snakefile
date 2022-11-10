@@ -1,0 +1,112 @@
+##### Improting libraries #####
+import pandas as pd
+from snakemake.utils import min_version
+min_version("7.6.1")
+##### Improting libraries #####
+
+##### Loading config file #####
+configfile: "../config/config.yaml"
+##### Loading config file #####
+
+##### Loading phenodata file #####
+phenodata = (
+    pd.read_table(config["samples"], dtype={"Filename": str}, delimiter='\t')
+    .set_index("Filename", drop=False)
+    .sort_index()
+)
+##### Loading phenodata file #####
+
+##### Getting all prefix from fastq.gz sample filename #####
+SAMPLES = phenodata[["Filename"]].replace(".fastq.gz", "", regex=True).to_numpy().flatten()
+##### Getting all prefix from fastq.gz sample filename #####
+
+# TODO test recover sample names via wildcards
+##### Getting all prefix from folder and using glob_wildcards
+#SAMPLES = glob_wildcards("../resources/reads/{sample}.fastq.gz")
+##### Getting all prefix from folder and using glob_wildcards
+
+rule all:
+    input:
+        ### QC results ###
+        "results/qc/multiqc_report.html",
+        "results/qc/barplot_pca.png",
+        "results/qc/scatterplot_pca.png",
+        ### QC results ###
+
+        ### DE results ###
+        "results/deseq2/all.rds",
+        "results/deseq2/normcounts.tsv",
+        "results/diffexp/" + config["diffexp"]["contrasts"] + ".diffexp.tsv",
+        "results/diffexp/" + config["diffexp"]["contrasts"] + ".ma-plot.svg",
+        ### DE results ###
+
+        ### MDP results ###
+        ##"results/mdp/MDP_allgenessamples.pdf",
+        #"results/mdp/MDP_gene_scores.tsv",
+        ##"results/mdp/MDP_perturbedsamples.pdf",
+        #"results/mdp/MDP_sample_scores.tsv",
+        #"results/mdp/MDP_zscore.tsv",
+        ### MDP results ###
+
+        ### CEMiTool results ###
+        "results/coexpression/report.html",
+        "results/coexpression/Plots/beta_r2.pdf",
+        "results/coexpression/Plots/gsea.pdf",
+        "results/coexpression/Plots/hist.pdf",
+        "results/coexpression/Plots/interaction.pdf",
+        "results/coexpression/Plots/mean_k.pdf",
+        "results/coexpression/Plots/mean_var.pdf",
+        "results/coexpression/Plots/ora.pdf",
+        "results/coexpression/Plots/profile.pdf",
+        "results/coexpression/Plots/qq.pdf",
+        "results/coexpression/Plots/sample_tree.pdf",
+         
+        "results/coexpression/Tables/enrichment_es.tsv",
+        "results/coexpression/Tables/enrichment_nes.tsv",
+        "results/coexpression/Tables/enrichment_padj.tsv",
+        "results/coexpression/Tables/interactions.tsv",
+        "results/coexpression/Tables/module.tsv",
+        "results/coexpression/Tables/modules_genes.gmt",
+        "results/coexpression/Tables/ora.tsv",
+        "results/coexpression/Tables/parameters.tsv",
+        "results/coexpression/Tables/selected_genes.txt",
+        "results/coexpression/Tables/summary_eigengene.tsv",
+        "results/coexpression/Tables/summary_mean.tsv",
+        "results/coexpression/Tables/summary_median.tsv",
+        ### CEMiTool results ###
+
+        ### Assembly transcriptome results ###
+        #"results/assembly/counts/gene_count_matrix.csv",
+		#"results/assembly/counts/transcript_count_matrix.csv"
+        "results/assembly/stringtie/merged_assembly.gtf",
+        ### Assembly transcriptome results ###
+
+        #"resources/ref/cds.fasta",
+        #"resources/ref/ncrna.fasta",
+        #"resources/ref/genome.bed"
+
+##### Loading rules #####
+include: "rules/qc.smk" # PCA plot and check others QC processes as well
+include: "rules/ref.smk" # Done
+# include: "rules/map-index-bowtie2.smk"
+include: "rules/map-bowtie2.smk" # Done
+include: "rules/featurecounts.smk" # Done
+include: "rules/diffexp.smk" # Done
+include: "rules/coexpression.smk" # If the pipeline will be use CEMiTool, should include the directive --latency-wait 20 in the snakemake command line
+#include: "rules/mdp.smk"
+include: "rules/assembly_transcriptome.smk"
+include: "rules/coding_potential_tools.smk"
+##### Loading rules #####
+
+
+##### Execution #####
+# snakemake --use-conda --cores 6 --latency-wait 20
+#
+# snakemake --dag | dot -Tsvg > dag.svg
+# snakemake --dag | dot -Tpng > dag.png
+##### Execution #####
+
+##### If you face in the error message #####
+# ModuleNotFoundError: No module named 'snakemake_wrapper_utils'
+# You should install this module by this command line: pip install snakemake-wrapper-utils
+##### If you face in the error message #####
