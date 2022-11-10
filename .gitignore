@@ -42,3 +42,4 @@ vignettes/*.pdf
 # Results from snakemake pipeline
 workflow/results/
 workflow/.snakemake
+resources/reads
