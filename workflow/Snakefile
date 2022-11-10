@@ -20,14 +20,14 @@ configfile: "../config/config.yaml"
 
 ##### Loading phenodata file #####
 phenodata = (
-    pd.read_table(config["samples"], dtype={"Filename": str}, delimiter='\t')
-    .set_index("Filename", drop=False)
+    pd.read_table(config["samples"], dtype={"Filename_R1": str}, delimiter='\t')
+    .set_index("Filename_R1", drop=False)
     .sort_index()
 )
 ##### Loading phenodata file #####
 
 ##### Getting all prefix from fastq.gz sample filename #####
-SAMPLES = phenodata[["Filename"]].replace(".fastq.gz", "", regex=True).to_numpy().flatten()
+SAMPLES = phenodata[["Filename_R1"]].replace("_S.*", "", regex=True).to_numpy().flatten()
 ##### Getting all prefix from fastq.gz sample filename #####
 
 # TODO test recover sample names via wildcards
