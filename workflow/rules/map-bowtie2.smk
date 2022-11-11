@@ -1,7 +1,7 @@
 # Depends on: rule bowtie2_build
 rule bowtie2:
     input:
-        sample=["../resources/reads/{sample}.fastq.gz"],
+        sample=["../resources/reads/{sample}_R1_001.fastq.gz", "../resources/reads/{sample}_R2_001.fastq.gz"],
         idx=multiext(
             "resources/ref/index/genome",
             ".1.bt2",
