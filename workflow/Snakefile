@@ -27,7 +27,8 @@ phenodata = (
 ##### Loading phenodata file #####
 
 ##### Getting all prefix from fastq.gz sample filename #####
-SAMPLES = phenodata[["Filename_R1"]].replace("_S.*", "", regex=True).to_numpy().flatten()
+#SAMPLES = phenodata[["Filename_R1"]].replace("_S.*", "", regex=True).to_numpy().flatten()
+SAMPLES = phenodata[["Filename_R1"]].replace("_R1_001.fastq.gz", "", regex=True).to_numpy().flatten()
 ##### Getting all prefix from fastq.gz sample filename #####
 
 # TODO test recover sample names via wildcards
@@ -39,8 +40,8 @@ rule all:
     input:
         ### QC results ###
         "results/qc/multiqc_report.html",
-        "results/qc/barplot_pca.png",
-        "results/qc/scatterplot_pca.png",
+        #"results/qc/barplot_pca.png",
+        #"results/qc/scatterplot_pca.png",
         ### QC results ###
 
 ##### Loading rules #####
