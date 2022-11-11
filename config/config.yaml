@@ -1,7 +1,7 @@
-wrapper_version: v1.4.0
+#wrapper_version: v1.4.0
 #wrapper_version: v1.10.0
 #wrapper_version: v1.18.0 # 28/10/2022
-#wrapper_version: v1.19.0 # 08/11/2022
+wrapper_version: v1.19.0 # 08/11/2022
 
 samples: ../resources/phenodata.tsv
 
