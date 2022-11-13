@@ -4,13 +4,15 @@ rule trim_pe:
         r2="../resources/reads/{sample}_R2_001.fastq.gz"
     output:
         r1="results/trimmed/{sample}.paired.R1.fastq.gz",
-        r2="results/trimmed/{sample}.paired.R2.fastq.gz"
+        r2="results/trimmed/{sample}.paired.R2.fastq.gz",
+        r1_unpaired="results/trimmed/{sample}.unpaired.R1.fastq.gz",
+        r2_unpaired="results/trimmed/{sample}.unpaired.R2.fastq.gz"
     log: "logs/trim/{sample}.pe.log"
     params:
         # List of trimmers (see manual)
         trimmer=["TRAILING:3"],
         # Optional parameters
-        extra=""
+        extra="",
         compression_level="-9"
     threads: config["params"]["general"]["threads"]
     wrapper: config["wrapper_version"] + "/bio/trimmomatic/pe"
