@@ -7,7 +7,7 @@ rule fastqc:
     # version: shell("fastqc --version")
     # log: "logs/fastqc/{sample}.log"
     threads: config["params"]["general"]["threads"]
-    wrapper: config["wrapper_version"] + "/bio/bio/fastqc"
+    wrapper: config["wrapper_version"] + "/bio/fastqc"
 
 # Depends on: rule fastqc
 rule multiqc:
@@ -15,7 +15,7 @@ rule multiqc:
     output: "results/qc/multiqc_report.html"
     params: ""  # Optional: extra parameters for multiqc.
     log: "logs/multiqc.log"
-    wrapper: config["wrapper_version"] + "/bio/bio/multiqc"
+    wrapper: config["wrapper_version"] + "/bio/multiqc"
 
 #rule pca:
 #    input:
