@@ -5,5 +5,4 @@ channels:
 dependencies:
   - samtools =1.13
   - subread =2.0.1
-  - mixcr =3.0.3
   - pygraphviz =1.9
