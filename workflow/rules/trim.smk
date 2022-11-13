@@ -1,10 +1,10 @@
 rule trim_pe:
     input:
-        r1="../resources/reads/{sample}.1.fastq.gz",
-        r2="../resources/reads/{sample}.2.fastq.gz"
+        r1="../resources/reads/{sample}_R1_001.fastq.gz",
+        r2="../resources/reads/{sample}_R2_001.fastq.gz"
     output:
-        r1="results/trimmed/{sample}.paired.1.fastq.gz",
-        r2="results/trimmed/{sample}.paired.2.fastq.gz"
+        r1="results/trimmed/{sample}.paired.R1.fastq.gz",
+        r2="results/trimmed/{sample}.paired.R2.fastq.gz"
     log: "logs/trim/{sample}.pe.log"
     params:
         # List of trimmers (see manual)
