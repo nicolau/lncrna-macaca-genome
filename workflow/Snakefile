@@ -4,6 +4,19 @@ from snakemake.utils import min_version
 min_version("7.6.1")
 ##### Improting libraries #####
 
+##### Important thing to run snakemake #####
+# By 11th November 2022, snakemake didnt working. I found a solution in a slackoverflow post, suggesting
+# to downgrade tabulate package from 0.9 to 0.8.
+# https://stackoverflow.com/questions/74226320/snakemake-tutorial-error-attributeerror-str-object-has-no-attribute-name
+# So then I executed the command:
+# conda activate <env_name>
+# conda install tabulate=0.8
+# This command installed tabulate version 0.8.10
+#
+# Install as well snakemake-wrapper-utils
+# conda install -c bioconda snakemake-wrapper-utils
+##### Important thing to run snakemake #####
+
 ##### Workflow guide #####
 # RNA-Seq libraries
 #   - Assess quality control
