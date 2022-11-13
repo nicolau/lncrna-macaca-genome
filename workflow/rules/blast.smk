@@ -12,7 +12,7 @@ rule blast_makedatabase_nucleotide:
         )
     log: "logs/{genome}.log"
     params: "-input_type fasta -blastdb_version 5 -parse_seqids"
-    wrapper: "v1.19.0/bio/blast/makeblastdb"
+    wrapper: config["wrapper_version"] + "/bio/blast/makeblastdb"
 
 rule blast_makedatabase_protein:
     input: fasta="protein/{protein}.fasta"
@@ -28,7 +28,7 @@ rule blast_makedatabase_protein:
         )
     log: "logs/{protein}.log"
     params: "-input_type fasta -blastdb_version 5"
-    wrapper: "v1.19.0/bio/blast/makeblastdb"
+    wrapper: config["wrapper_version"] + "/bio/blast/makeblastdb"
 
 rule blast_nucleotide:
     input:
@@ -50,4 +50,4 @@ rule blast_nucleotide:
         # https://snakemake-wrappers.readthedocs.io/en/stable/wrappers/blast/blastn.html.
         format="6 qseqid sseqid evalue",
         extra=""
-    wrapper: "v1.19.0/bio/blast/blastn"
+    wrapper: config["wrapper_version"] + "/bio/blast/blastn"
