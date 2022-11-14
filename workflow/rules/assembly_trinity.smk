@@ -10,5 +10,5 @@ rule trinity:
     # resource restrictions (https://snakemake.readthedocs.io/en/latest/snakefiles/rules.html#resources)
     # and which can be used to request RAM during cluster job submission as `{resources.mem_mb}`:
     # https://snakemake.readthedocs.io/en/latest/executing/cluster.html#job-properties
-    resources: mem_gb=10
+    resources: mem_gb=8
     wrapper: config["wrapper_version"] + "/bio/trinity"
