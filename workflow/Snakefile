@@ -58,14 +58,14 @@ rule all:
         ### QC results ###
 
         "results/counts/raw_count_matrix_ensemblid.tsv",
-        "results/assembly/trinity/Trinity.fasta"
+        #"results/assembly/trinity/Trinity.fasta"
 
 ##### Loading rules #####
 include: "rules/qc.smk" # PCA plot and check others QC processes as well
-include: "rules/ref.smk" # Done
-include: "rules/map-bowtie2.smk" # Done
-include: "rules/featurecounts.smk" # Done
-include: "rules/assembly_trinity.smk"
+include: "rules/ref.smk"
+include: "rules/map-bowtie2.smk"
+include: "rules/featurecounts.smk"
+#include: "rules/assembly_trinity.smk"
 include: "rules/trim.smk"
 ##### Loading rules #####
 
