@@ -17,12 +17,12 @@ rule multiqc:
     log: "logs/multiqc.log"
     wrapper: config["wrapper_version"] + "/bio/multiqc"
 
-#rule pca:
-#    input:
-#        log2cpm="results/counts/log2cpm_count_matrix_symbol.tsv",
-#        phenodata="../resources/phenodata.tsv"
-#    output: "results/qc/barplot_pca.png", "results/qc/scatterplot_pca.png"
-#    params: "" # Optional: extra parameters for PCA plot.
-#    conda: "../envs/deseq2.yaml"
-#    log: "logs/pca_plot.log"
-#    script: "../scripts/pca.R"
+rule pca:
+    input:
+        log2cpm="results/counts/log2cpm_count_matrix_symbol.tsv",
+        phenodata="../resources/phenodata.tsv"
+    output: "results/qc/barplot_pca.png", "results/qc/scatterplot_pca.png"
+    params: "" # Optional: extra parameters for PCA plot.
+    conda: "../envs/deseq2.yaml"
+    log: "logs/pca_plot.log"
+    script: "../scripts/pca.R"
