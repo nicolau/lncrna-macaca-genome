@@ -1,14 +1,37 @@
-rule trinity:
+rule assembly_merge_right_and_left:
     input:
         left=expand("results/trimmed/{sample}.paired.R1.fastq.gz", sample=SAMPLES),
         right=expand("results/trimmed/{sample}.paired.R2.fastq.gz", sample=SAMPLES)
-    output: "results/assembly/trinity/Trinity.fasta"
-    log: "logs/trinity/trinity.log"
-    params: extra=""
+    output:
+        left=temp("results/assembly/trinity/left.fq.gz"),
+        right=temp("results/assembly/trinity/right.fq.gz")
     threads: config["params"]["general"]["threads"] # Use at least two threads
-    # optional specification of memory usage of the JVM that snakemake will respect with global
-    # resource restrictions (https://snakemake.readthedocs.io/en/latest/snakefiles/rules.html#resources)
-    # and which can be used to request RAM during cluster job submission as `{resources.mem_mb}`:
-    # https://snakemake.readthedocs.io/en/latest/executing/cluster.html#job-properties
-    resources: mem_gb=8
-    wrapper: config["wrapper_version"] + "/bio/trinity"
+    shell:
+        """
+        zcat {input.left} | gzip -c > {output.left}
+        zcat {input.right} | gzip -c > {output.right}
+        """
+
+rule assembly_run_trinity:
+    input:
+        left=rules.assembly_merge_right_and_left.output.left,
+        right=rules.assembly_merge_right_and_left.output.right
+    output: fasta="results/assembly/trinity/Trinity.fasta"
+    threads: config["params"]["general"]["threads"] # Use at least two threads
+    params:
+        memory="8G",
+        outdir="results/assembly/trinity"
+    conda: "../envs/trinity.yaml"
+    log: "logs/trinity/trinity.log"
+    shell:
+        """
+        Trinity \
+            --seqType fq \
+            --max_memory {params.memory} \
+            --left {input.left} \
+            --right {input.right} \
+            --CPU {threads} \
+            --full_cleanup \
+            --output {params.outdir} \
+        > {log}
+        """
