@@ -1,3 +1,17 @@
+#rule top_1000_reads:
+#    input:
+#        left="results/trimmed/{sample}.paired.R1.fastq.gz",
+#        right="results/trimmed/{sample}.paired.R2.fastq.gz"
+#    output:
+#        left="results/trimmed/{sample}.paired.R1.sub.fastq.gz",
+#        right="results/trimmed/{sample}.paired.R2.sub.fastq.gz"
+#    params: number=4000
+#    shell:
+#        """
+#        zcat {input.left} | head -n {params.number} | gzip -c > {output.left}
+#        zcat {input.right} | head -n {params.number} | gzip -c > {output.right}
+#        """
+
 rule assembly_merge_right_and_left:
     input:
         left=expand("results/trimmed/{sample}.paired.R1.fastq.gz", sample=SAMPLES),
