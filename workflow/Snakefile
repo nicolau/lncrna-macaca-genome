@@ -58,7 +58,8 @@ rule all:
         ### QC results ###
 
         "results/counts/raw_count_matrix_ensemblid.tsv",
-        "results/assembly/trinity/Trinity.fasta"
+        expand("results/mapped/" + config["params"]["mapper"] + "/{sample}.bed", sample=SAMPLES)
+        #"results/assembly/trinity/Trinity.fasta"
 
 ##### Loading rules #####
 include: "rules/qc.smk" # PCA plot and check others QC processes as well
@@ -67,6 +68,7 @@ include: "rules/map-bowtie2.smk"
 include: "rules/featurecounts.smk"
 include: "rules/assembly_trinity.smk"
 include: "rules/trim.smk"
+include: "rules/nonannotated_reads.smk"
 ##### Loading rules #####
 
 
