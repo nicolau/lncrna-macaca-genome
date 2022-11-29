@@ -1,8 +1,8 @@
 rule get_fastq_pe:
     output:
         # the wildcard name must be accession, pointing to an SRA number
-        "data/pe/{accession}_1.fastq",
-        "data/pe/{accession}_2.fastq"
+        "data/pe/{accession}_R1.fastq",
+        "data/pe/{accession}_R2.fastq"
     log: "logs/pe/{accession}.log"
     params: extra="--skipe-technical"
     threads: config["params"]["general"]["threads"]
@@ -11,8 +11,8 @@ rule get_fastq_pe:
 rule get_fastq_pe_gz:
     output:
         # the wildcard name must be accession, pointing to an SRA number
-        "data/pe/{accession}_1.fastq.gz",
-        "data/pe/{accession}_2.fastq.gz"
+        "data/pe/{accession}_R1.fastq.gz",
+        "data/pe/{accession}_R2.fastq.gz"
     log: "logs/pe/{accession}.gz.log"
     params: extra="--skip-technical"
     threads: config["params"]["general"]["threads"]
@@ -21,8 +21,8 @@ rule get_fastq_pe_gz:
 rule get_fastq_pe_bz2:
     output:
         # the wildcard name must be accession, pointing to an SRA number
-        "data/pe/{accession}_1.fastq.bz2",
-        "data/pe/{accession}_2.fastq.bz2",
+        "data/pe/{accession}_R1.fastq.bz2",
+        "data/pe/{accession}_R2.fastq.bz2"
     log: "logs/pe/{accession}.bz2.log"
     params: extra="--skip-technical"
     threads: config["params"]["general"]["threads"]
