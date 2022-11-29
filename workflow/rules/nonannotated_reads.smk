@@ -8,7 +8,7 @@ rule bamtobed:
 rule bedtools_merge:
     input:
         left="results/mapped/" + config["params"]["mapper"] + "/{sample}.bed",
-        right="resources/ref/genome.gtf"
+        right="resources/ref/genome.bed"
     output: "results/counts/intersect/{sample}.intersected.bed"
     params:
         ## Add optional parameters
