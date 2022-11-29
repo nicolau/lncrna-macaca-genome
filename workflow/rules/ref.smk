@@ -57,3 +57,11 @@ rule get_noncoding_fasta:
     cache: True
     message: "Downloading the ncRNA {params.species} ({params.build}) and release {params.release}..."
     wrapper: config["wrapper_version"] + "/bio/reference/ensembl-sequence"
+
+rule gtf2bed:
+    input: "resources/ref/genome.gtf"
+    output:
+        db="resources/ref/genome.db",
+        bed="resources/ref/genome.bed"
+    conda: "../envs/general.yaml"
+    script: "../scripts/gtf2bed.py"
