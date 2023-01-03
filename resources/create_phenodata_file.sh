@@ -1,0 +1,1 @@
+ls *.fastq.gz | sed 's/_R.*//' | sort | uniq | awk '{print , "\t", , "\t", , "_R1_001.fastq.gz", "\t", , "_R2_001.fastq.gz"}' | sed 's/ //g' | sed 's/^.\{5\}//' | awk '{print , "\t", , "\t", , "\t", }' > ../phenodata.tsv.new
