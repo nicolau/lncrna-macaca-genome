@@ -74,7 +74,7 @@ while( my $line = <$handle> ) {
 
         my (undef, undef, undef, undef, undef, undef, $readid, undef, undef, undef, $annot) = split /\t/, $line;
 
-        print "$readid\n" if $annot == ".";
+        print "$readid\n" if $annot eq ".";
 }
 
 close $handle;
