@@ -5,8 +5,8 @@ rule trim_pe:
     output:
         r1="results/trimmed/{sample}.paired.R1.fastq.gz",
         r2="results/trimmed/{sample}.paired.R2.fastq.gz",
-        r1_unpaired="results/trimmed/{sample}.unpaired.R1.fastq.gz",
-        r2_unpaired="results/trimmed/{sample}.unpaired.R2.fastq.gz"
+        r1_unpaired=temp("results/trimmed/{sample}.unpaired.R1.fastq.gz"),
+        r2_unpaired=temp("results/trimmed/{sample}.unpaired.R2.fastq.gz")
     log: "logs/trim/{sample}.pe.log"
     params:
         # List of trimmers (see manual)
