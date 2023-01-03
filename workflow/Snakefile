@@ -41,12 +41,13 @@ phenodata = (
 
 ##### Getting all prefix from fastq.gz sample filename #####
 #SAMPLES = phenodata[["Filename_R1"]].replace("_S.*", "", regex=True).to_numpy().flatten()
-SAMPLES = phenodata[["Filename_R1"]].replace("_R1_001.fastq.gz", "", regex=True).to_numpy().flatten()
+SAMPLES = phenodata[["Filename_R1"]].replace("_R1_001.fastq.gz", "", regex=True).head(12).to_numpy().flatten()
+#print(SAMPLES)
 ##### Getting all prefix from fastq.gz sample filename #####
 
 # TODO test recover sample names via wildcards
 ##### Getting all prefix from folder and using glob_wildcards
-#SAMPLES = glob_wildcards("../resources/reads/{sample}.fastq.gz")
+#SAMPLES = glob_wildcards("../resources/reads/{sample}_R1_001.fastq.gz")
 ##### Getting all prefix from folder and using glob_wildcards
 
 rule all:
@@ -58,18 +59,19 @@ rule all:
         ### QC results ###
 
         "results/counts/raw_count_matrix_ensemblid.tsv",
-        expand("results/counts/intersect/{sample}.intersected.bed", sample=SAMPLES),
-        expand("results/counts/unannotated/{sample}.ids", sample=SAMPLES)
+        "results/assembly/trinity/Trinity.fasta"
+        #expand("results/unannotated/{sample}.unannotated.R1.fastq.gz", sample=SAMPLES),
+        #expand("results/unannotated/{sample}.unannotated.R2.fastq.gz", sample=SAMPLES)
         #"results/assembly/trinity/Trinity.fasta"
 
 ##### Loading rules #####
 include: "rules/qc.smk" # PCA plot and check others QC processes as well
 include: "rules/ref.smk"
+include: "rules/trim.smk"
 include: "rules/map-bowtie2.smk"
 include: "rules/featurecounts.smk"
-include: "rules/assembly_trinity.smk"
-include: "rules/trim.smk"
 include: "rules/nonannotated_reads.smk"
+include: "rules/assembly_trinity.smk"
 ##### Loading rules #####
 
 
