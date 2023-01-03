@@ -14,8 +14,8 @@
 
 rule assembly_merge_right_and_left:
     input:
-        left=expand("results/trimmed/{sample}.paired.R1.fastq.gz", sample=SAMPLES),
-        right=expand("results/trimmed/{sample}.paired.R2.fastq.gz", sample=SAMPLES)
+        left=expand("results/unannotated/{sample}.unannotated.R1.fastq.gz", sample=SAMPLES),
+        right=expand("results/unannotated/{sample}.unannotated.R2.fastq.gz", sample=SAMPLES)
     output:
         left=temp("results/assembly/trinity/left.fq.gz"),
         right=temp("results/assembly/trinity/right.fq.gz")
@@ -33,7 +33,7 @@ rule assembly_run_trinity:
     output: fasta="results/assembly/trinity/Trinity.fasta"
     threads: config["params"]["general"]["threads"] # Use at least two threads
     params:
-        memory="8G",
+        memory="10G",
         outdir="results/assembly/trinity"
     conda: "../envs/trinity.yaml"
     log: "logs/trinity/trinity.log"
