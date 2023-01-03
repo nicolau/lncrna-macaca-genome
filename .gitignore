@@ -45,3 +45,7 @@ workflow/.snakemake
 resources/reads
 workflow/logs
 workflow/resources
+
+
+# Visual code
+core.*
