@@ -28,8 +28,18 @@ rule bedtools_merge:
 rule get_unannotated_reads:
     input: "results/counts/intersect/{sample}.intersected.bed"
     output: "results/counts/unannotated/{sample}.ids"
-    script: "perl ../scripts/filter_nonannotated_reads.pl --input {input} | sort | uniq > {output}"
+    shell: "perl scripts/filter_nonannotated_reads.pl --input {input} | sort | uniq > {output}"
 
-#rule combine_unannotated_reads:
-#    input: ""
-#    output: ""
+rule get_fastq_from_unannotated_ids:
+    input:
+        left="results/trimmed/{sample}.paired.R1.fastq.gz",
+        right="results/trimmed/{sample}.paired.R2.fastq.gz",
+        ids="results/counts/unannotated/{sample}.ids"
+    output:
+        left="results/unannotated/{sample}.unannotated.R1.fastq.gz",
+        right="results/unannotated/{sample}.unannotated.R2.fastq.gz"
+    shell:
+        """
+        perl scripts/get_fasta_from_ids.pl --input {input.left} --regex {input.ids} | gzip -c > {output.left}
+        perl scripts/get_fasta_from_ids.pl --input {input.right} --regex {input.ids} | gzip -c > {output.right}
+        """
