@@ -6,4 +6,3 @@ dependencies:
   - samtools =1.13
   - subread =2.0.1
   - pygraphviz =1.9
-  - gffutils =0.11.1
